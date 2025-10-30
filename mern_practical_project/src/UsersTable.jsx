@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 
-const UsersTable = ({ rows }) => {
+const UsersTable = ({ rows, selectedUser }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -28,17 +28,14 @@ const UsersTable = ({ rows }) => {
                 key={row.id || row._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {row.id}
-                </TableCell>
+                <TableCell>{row.id}</TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>
                   <Button
                     sx={{ margin: "0px 10px" }}
-                    onClick={() => {
-                      // Update user logic here
-                      console.log("Update", row);
-                    }}
+                    onClick={() =>
+                      selectedUser({ id: row.id || row._id, name: row.name })
+                    }
                   >
                     Update
                   </Button>
@@ -46,8 +43,7 @@ const UsersTable = ({ rows }) => {
                     sx={{ margin: "0px 10px" }}
                     color="error"
                     onClick={() => {
-                      // Delete user logic here
-                      console.log("Delete", row);
+                      console.log("Delete user:", row);
                     }}
                   >
                     Delete

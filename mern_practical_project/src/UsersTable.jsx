@@ -11,13 +11,22 @@ import {
 
 const UsersTable = ({ rows, selectedUser, deleteUser }) => {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Paper}
+      sx={{
+        background: "rgba(255, 255, 255, 0.1)",
+        backdropFilter: "blur(12px)",
+        color: "#fff",
+        borderRadius: "15px",
+        boxShadow: "0 8px 25px rgba(0,0,0,0.3)",
+      }}
+    >
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Actions</TableCell>
+          <TableRow sx={{ background: "rgba(0, 0, 0, 0.3)" }}>
+            <TableCell sx={{ color: "#fff", fontWeight: 600 }}>ID</TableCell>
+            <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Name</TableCell>
+            <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Actions</TableCell>
           </TableRow>
         </TableHead>
 
@@ -26,21 +35,47 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
             rows.map((row) => (
               <TableRow
                 key={row.id || row._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    transition: "0.3s",
+                  },
+                }}
               >
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.name}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>{row.id}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>{row.name}</TableCell>
                 <TableCell>
                   <Button
-                    sx={{ margin: "0px 10px" }}
-                    onClick={() => selectedUser({ id: row.id, name: row.name })}
+                    variant="contained"
+                    sx={{
+                      background: "linear-gradient(45deg, #00c6ff, #0072ff)",
+                      color: "#fff",
+                      marginRight: "10px",
+                      textTransform: "none",
+                      "&:hover": {
+                        background: "linear-gradient(45deg, #0072ff, #00c6ff)",
+                      },
+                    }}
+                    onClick={() =>
+                      selectedUser({ id: row.id || row._id, name: row.name })
+                    }
                   >
                     Update
                   </Button>
                   <Button
-                    sx={{ margin: "0px 10px" }}
-                    color="error"
-                    onClick={() => deleteUser({ id: row.id})}
+                    variant="contained"
+                    sx={{
+                      background: "linear-gradient(45deg, #ff416c, #ff4b2b)",
+                      color: "#fff",
+                      textTransform: "none",
+                      "&:hover": {
+                        background: "linear-gradient(45deg, #ff4b2b, #ff416c)",
+                      },
+                    }}
+                    onClick={() =>
+                      deleteUser({ id: row.id || row._id })
+                    }
                   >
                     Delete
                   </Button>
@@ -49,7 +84,7 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={3} align="center">
+              <TableCell colSpan={3} align="center" sx={{ color: "#fff" }}>
                 No Users Found
               </TableCell>
             </TableRow>
@@ -61,3 +96,7 @@ const UsersTable = ({ rows, selectedUser, deleteUser }) => {
 };
 
 export default UsersTable;
+
+
+
+//kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk

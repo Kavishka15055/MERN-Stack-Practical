@@ -22,30 +22,30 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
   }, [data]);
 
   return (
-    <Grid
+        <Grid
       container
       spacing={2}
       sx={{
-        backgroundColor: "#ffffff",
+        background: "rgba(255, 255, 255, 0.1)",
+        backdropFilter: "blur(12px)",
+        padding: "25px",
+        borderRadius: "15px",
+        boxShadow: "0 8px 25px rgba(0,0,0,0.3)",
         marginBottom: "30px",
-        display: "block",
-        padding: "20px",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(0,0,0,0.1)",
       }}
     >
       <Grid item xs={12}>
-        <Typography component="h1" sx={{ color: "#000000" }}>
+        <Typography component="h1" sx={{ color: "#fff", fontWeight: 600 }}>
           User Form
         </Typography>
       </Grid>
 
-      <Grid item xs={12} sm={6} sx={{ display: "flex" }}>
+      <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <Typography
           component="label"
           htmlFor="id"
           sx={{
-            color: "#000000",
+            color: "#fff",
             marginRight: "20px",
             fontSize: "16px",
             width: "100px",
@@ -58,18 +58,25 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
           type="number"
           id="id"
           name="id"
-          sx={{ width: "400px" }}
+          sx={{
+            width: "100%",
+            maxWidth: "400px",
+            background: "rgba(255,255,255,0.15)",
+            color: "#fff",
+            borderRadius: "8px",
+            px: 1.5,
+          }}
           value={id}
           onChange={(e) => setId(e.target.value)}
         />
       </Grid>
 
-      <Grid item xs={12} sm={6} sx={{ display: "flex" }}>
+      <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <Typography
           component="label"
           htmlFor="name"
           sx={{
-            color: "#000000",
+            color: "#fff",
             marginRight: "20px",
             fontSize: "16px",
             width: "100px",
@@ -82,31 +89,45 @@ const UserForm = ({ addUser, updateUser, submitted, data, isEdit }) => {
           type="text"
           id="name"
           name="name"
-          sx={{ width: "400px" }}
+          sx={{
+            width: "100%",
+            maxWidth: "400px",
+            background: "rgba(255,255,255,0.15)",
+            color: "#fff",
+            borderRadius: "8px",
+            px: 1.5,
+          }}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </Grid>
 
-      <Button
-        sx={{
-          margin: "auto",
-          marginBottom: "20px",
-          backgroundColor: "#00c6e6",
-          color: "#000000",
-          marginLeft: "15px",
-          marginTop: "20px",
-          "&:hover": {
-            opacity: "0.7",
-            backgroundColor: "#00c6e6",
-          },
-        }}
-        onClick={() => (isEdit ? updateUser({ id, name }) : addUser({ id, name }))}
-      >
-        {isEdit ? "Update User" : "Add User"}
-      </Button>
+      <Grid item xs={12} sx={{ textAlign: "center" }}>
+        <Button
+          variant="contained"
+          sx={{
+            background: isEdit
+              ? "linear-gradient(45deg, #ff416c, #ff4b2b)"
+              : "linear-gradient(45deg, #00c6ff, #0072ff)",
+            color: "#fff",
+            textTransform: "none",
+            px: 4,
+            py: 1.5,
+            borderRadius: "10px",
+            "&:hover": {
+              opacity: 0.85,
+            },
+          }}
+          onClick={() => (isEdit ? updateUser({ id, name }) : addUser({ id, name }))}
+        >
+          {isEdit ? "Update User" : "Add User"}
+        </Button>
+      </Grid>
     </Grid>
   );
 };
 
 export default UserForm;
+
+
+//kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk

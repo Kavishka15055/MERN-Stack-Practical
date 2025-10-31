@@ -37,15 +37,25 @@ const updateUser = (req, res, next) => {
     });
 };
 
-const deleteUser = (req, res, next) => {
-  const id = req.body.id;
-  User.deleteOne({ id: id })
-    .then((response) => {
-      res.json({ response });
-    })
-    .catch((error) => {
-      res.json({ message: "An error occurred" });
-    });
+deleteUser = async (req, res) => {
+  try {
+    const userId = req.query.id; // ✅ get from query string
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const deletedUser = await User.findOneAndDelete({ id: userId });
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "User deleted successfully", deletedUser });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
 };
 
 exports.getUsers = getUsers;

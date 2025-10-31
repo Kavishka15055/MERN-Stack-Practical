@@ -67,16 +67,16 @@ const Users = () => {
       });
   };
 
-  // ✅ Delete user (optional improvement)
-  const deleteUser = (id) => {
-    Axios.delete(`http://localhost:3001/api/deleteuser?id=${id}`)
-      .then(() => {
-        getUsers();
-      })
-      .catch((error) => {
-        console.error("Axios error:", error);
-      });
-  };
+  // ✅ Delete user 
+const deleteUser = (data) => {
+  Axios.delete(`http://localhost:3001/api/deleteuser?id=${data.id}`)
+    .then(() => {
+      getUsers(); // refresh the list
+    })
+    .catch((error) => {
+      console.error("Axios error:", error);
+    });
+};
 
   return (
     <Box
@@ -100,7 +100,7 @@ const Users = () => {
           setSelectedUser(data);
           setIsEdit(true);
         }}
-        deleteUser={deleteUser}
+        deleteUser={data => window.confirm("Are you sure you want to delete this user?") && deleteUser(data)}
       />
     </Box>
   );

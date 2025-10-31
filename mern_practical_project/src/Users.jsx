@@ -10,10 +10,12 @@ const Users = () => {
   const [selectedUser, setSelectedUser] = useState({});
   const [isEdit, setIsEdit] = useState(false);
 
+  // Fetch users when component loads
   useEffect(() => {
     getUsers();
   }, []);
 
+  // ✅ Fetch all users
   const getUsers = () => {
     Axios.get("http://localhost:3001/api/users")
       .then((response) => {
@@ -24,8 +26,10 @@ const Users = () => {
       });
   };
 
+  // ✅ Add user
   const addUser = (data) => {
     setSubmitted(true);
+
     const payload = {
       id: data.id,
       name: data.name,
@@ -33,7 +37,7 @@ const Users = () => {
 
     Axios.post("http://localhost:3001/api/createuser", payload)
       .then(() => {
-        getUsers();
+        getUsers(); // refresh
         setSubmitted(false);
         setIsEdit(false);
       })
@@ -42,6 +46,7 @@ const Users = () => {
       });
   };
 
+  // ✅ Update user (fixed: using PUT instead of POST)
   const updateUser = (data) => {
     setSubmitted(true);
 
@@ -50,11 +55,23 @@ const Users = () => {
       name: data.name,
     };
 
-    Axios.post("http://localhost:3001/api/updateuser", payload)
+    Axios.put("http://localhost:3001/api/updateuser", payload) // ✅ changed from POST → PUT
       .then(() => {
-        getUsers();
+        getUsers(); // refresh table after update
         setSubmitted(false);
         setIsEdit(false);
+        setSelectedUser({});
+      })
+      .catch((error) => {
+        console.error("Axios error:", error);
+      });
+  };
+
+  // ✅ Delete user (optional improvement)
+  const deleteUser = (id) => {
+    Axios.delete(`http://localhost:3001/api/deleteuser?id=${id}`)
+      .then(() => {
+        getUsers();
       })
       .catch((error) => {
         console.error("Axios error:", error);
@@ -76,12 +93,14 @@ const Users = () => {
         data={selectedUser}
         isEdit={isEdit}
       />
+
       <UsersTable
         rows={users}
         selectedUser={(data) => {
           setSelectedUser(data);
           setIsEdit(true);
         }}
+        deleteUser={deleteUser}
       />
     </Box>
   );

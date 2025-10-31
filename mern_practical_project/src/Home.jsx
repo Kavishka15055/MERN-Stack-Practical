@@ -7,7 +7,7 @@ function Home() {
   return (
     <div
   style={{
-    width: "100vw",
+    width: "300%",
     height: "100vh",
     display: "flex",
     flexDirection: "column",
@@ -18,6 +18,7 @@ function Home() {
     textAlign: "center",
     fontFamily: "Poppins, sans-serif",
     overflow: "hidden",
+    marginLeft: "-100%",
   }}
 >
   <h1

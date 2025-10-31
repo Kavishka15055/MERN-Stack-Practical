@@ -81,7 +81,7 @@ const deleteUser = (data) => {
   return (
     <Box
   sx={{
-    width: "100vw",
+    width: "150%",
     minHeight: "100vh",
     background: "linear-gradient(120deg, #00c6ff, #0072ff)",
     display: "flex",
@@ -91,6 +91,7 @@ const deleteUser = (data) => {
     paddingTop: "80px",
     paddingBottom: "60px",
     boxSizing: "border-box",
+    marginLeft: "-25%",
   }}
 >
   <Typography

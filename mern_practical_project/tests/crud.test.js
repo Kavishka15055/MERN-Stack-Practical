@@ -1,4 +1,4 @@
-import { Builder, By, until } from "selenium-webdriver";
+import { Builder, By, until, Key } from "selenium-webdriver";
 
 async function testCRUD() {
   let driver = await new Builder().forBrowser("chrome").build();
@@ -13,38 +13,44 @@ async function testCRUD() {
     // Open frontend
     await driver.get("http://localhost:5173"); // Update to your React URL
     console.log("🌐 Frontend opened");
+    await driver.sleep(3000); // ⏳ wait for page to load
 
     // Navigate to Manage Users section (update XPath according to your app)
     const manageUsersLink = await driver.wait(
       until.elementLocated(By.xpath('//*[@id="root"]/div/button')),
-      10000
+      15000
     );
     await manageUsersLink.click();
     console.log("➡️ Navigated to Manage Users section");
+    await driver.sleep(2000);
 
     // Wait for ID input
     const idInput = await driver.wait(
       until.elementLocated(By.css('input[id="id"]')),
-      20000
+      25000
     );
-    await driver.wait(until.elementIsVisible(idInput), 5000);
+    await driver.wait(until.elementIsVisible(idInput), 10000);
     console.log("✅ ID input found");
+    await driver.sleep(1000);
 
     // Wait for Name input
     const nameInput = await driver.wait(
       until.elementLocated(By.css('input[id="name"]')),
-      20000
+      25000
     );
-    await driver.wait(until.elementIsVisible(nameInput), 5000);
+    await driver.wait(until.elementIsVisible(nameInput), 10000);
     console.log("✅ Name input found");
+    await driver.sleep(2000);
 
     // Add User
     await idInput.sendKeys("1001");
     await nameInput.sendKeys("Test User");
-    const addButton = await driver.findElement(By.xpath("//button[contains(text(),'Add User')]"));
+    const addButton = await driver.findElement(
+      By.xpath("//button[contains(text(),'Add User')]")
+    );
     await addButton.click();
     console.log("➕ User added");
-    await driver.sleep(3000);
+    await driver.sleep(2000); // ⏳ wait to see added user
 
     // Update User
     const updateButton = await driver.wait(
@@ -52,21 +58,26 @@ async function testCRUD() {
       20000
     );
     await updateButton.click();
+    await driver.sleep(3000);
 
     const nameField = await driver.findElement(By.css('input[id="name"]'));
-    await nameField.clear();
+    await nameField.sendKeys(Key.chord(Key.CONTROL, "a"), Key.BACK_SPACE);
     await nameField.sendKeys("Updated User");
-    const updateUserButton = await driver.findElement(By.xpath("//button[contains(text(),'Update User')]"));
+    const updateUserButton = await driver.findElement(
+      By.xpath("//button[contains(text(),'Update User')]")
+    );
     await updateUserButton.click();
     console.log("✏️ User updated");
-    await driver.sleep(5000);
+    await driver.sleep(3000);
 
     // Delete User (override confirm)
     await driver.executeScript("window.confirm = function(){ return true; }");
-    const deleteButton = await driver.findElement(By.xpath("//button[contains(text(),'Delete')]"));
+    const deleteButton = await driver.findElement(
+      By.xpath("//button[contains(text(),'Delete')]")
+    );
     await deleteButton.click();
     console.log("🗑️ User deleted");
-    await driver.sleep(3000);
+    await driver.sleep(3000); // ⏳ wait to see deletion
 
     console.log("✅ CRUD test completed successfully!");
   } catch (err) {

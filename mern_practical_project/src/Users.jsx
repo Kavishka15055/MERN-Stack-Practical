@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import UserForm from "./UserForm";
 import UsersTable from "./UsersTable";
 import Axios from "axios";
@@ -80,30 +80,72 @@ const deleteUser = (data) => {
 
   return (
     <Box
-      sx={{
-        width: "calc(100% - 100px)",
-        margin: "auto",
-        marginTop: "100px",
-      }}
-    >
-      <UserForm
-        addUser={addUser}
-        updateUser={updateUser}
-        submitted={submitted}
-        data={selectedUser}
-        isEdit={isEdit}
-      />
+  sx={{
+    width: "100vw",
+    minHeight: "100vh",
+    background: "linear-gradient(120deg, #00c6ff, #0072ff)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingTop: "80px",
+    paddingBottom: "60px",
+    boxSizing: "border-box",
+  }}
+>
+  <Typography
+    variant="h3"
+    sx={{
+      color: "#fff",
+      fontWeight: 700,
+      mb: 4,
+      letterSpacing: "1px",
+      textShadow: "2px 2px 10px rgba(0,0,0,0.3)",
+    }}
+  >
+    Manage Users
+  </Typography>
 
+  <Paper
+    elevation={10}
+    sx={{
+      width: { xs: "90%", sm: "80%", md: "70%" },
+      padding: "40px",
+      borderRadius: "25px",
+      background: "rgba(255, 255, 255, 0.15)",
+      backdropFilter: "blur(10px)",
+      boxShadow: "0px 8px 30px rgba(0,0,0,0.3)",
+      color: "#fff",
+    }}
+  >
+    <UserForm
+      addUser={addUser}
+      updateUser={updateUser}
+      submitted={submitted}
+      data={selectedUser}
+      isEdit={isEdit}
+    />
+
+    <Box sx={{ mt: 6 }}>
       <UsersTable
         rows={users}
         selectedUser={(data) => {
           setSelectedUser(data);
           setIsEdit(true);
         }}
-        deleteUser={data => window.confirm("Are you sure you want to delete this user?") && deleteUser(data)}
+        deleteUser={(data) =>
+          window.confirm("Are you sure you want to delete this user?") &&
+          deleteUser(data)
+        }
       />
     </Box>
+  </Paper>
+</Box>
   );
 };
 
 export default Users;
+
+
+
+//kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
